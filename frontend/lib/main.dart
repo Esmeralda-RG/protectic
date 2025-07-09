@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'screens/home_screen.dart';
-
+import 'screens/user_home_screen.dart';
+import 'screens/simulacro_screen.dart';
+import 'package:protectic/screens/progreso_screen.dart';
+import 'screens/ensenanza_screen.dart';
 void main() {
   runApp(ProtecTICApp());
 }
@@ -15,8 +18,18 @@ class ProtecTICApp extends StatelessWidget {
         scaffoldBackgroundColor: const Color(0xFFFDF6D8),
         fontFamily: 'Arial',
       ),
-      home: HomeScreen(),
       debugShowCheckedModeBanner: false,
+        // home: HomeScreen(),
+      // Pantalla inicial
+      home: const UserHomeScreen(name: 'fabi'),
+
+      //  Aquí la ruta de Simulacros y otros del menu principal
+      routes: {
+        '/simulacros': (context) => const SimulacroScreen(),
+        '/progreso': (context) => const ProgresoScreen(),
+        '/ensenanza': (context) => const EnsenanzaScreen(),
+
+      },
     );
   }
 }

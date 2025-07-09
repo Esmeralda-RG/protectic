@@ -18,7 +18,7 @@
    ```bash
    DB_HOST=
    DB_USER=
-   DB_PASSWORD=
+   DB_PASSWORD=b 
    DB_NAME=
    JWT_SECRET=
    PORT=

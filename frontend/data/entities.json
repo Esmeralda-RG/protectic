@@ -14,7 +14,7 @@
           "Cartagena: 605 693 4400",
           "Barranquilla: 605 361 8888"
         ],
-        "logo": "/images/Logo_Bancolombia.webp"
+        "logo": "assets/images/Logo_Bancolombia.webp"
       },
       {
         "nombre": "Banco de Bogotá",
@@ -27,7 +27,7 @@
           "Cali: 602 898 00 77",
           "Medellín: 604 576 43 30"
         ],
-        "logo": "/images/Logo_Banco_de_Bogota.webp"
+        "logo": "assets/images/Logo_Banco_de_Bogota.webp"
       },
       {
         "nombre": "BBVA Colombia",
@@ -40,7 +40,7 @@
           "Cali: 602 889 20 20",
           "Barranquilla: 605 350 35 00"
         ],
-        "logo": "/images/Logo_BBVA.webp"
+        "logo": "assets/images/Logo_BBVA.webp"
       },
       {
         "nombre": "Davivienda",
@@ -49,7 +49,7 @@
           "Teléfono: 01 8000 12 3838",
           "Bogotá: 601 338 3838"
         ],
-        "logo": "/images/Logo_Davivienda.webp"
+        "logo": "assets/images/Logo_Davivienda.webp"
       },
       {
         "nombre": "Banco de Occidente",
@@ -61,7 +61,7 @@
           "Medellín: 604 6052020",
           "Barranquilla: 605 3869772"
         ],
-        "logo": "/images/Logo_Banco_de_Occidente_logo.webp"
+        "logo": "assets/images/Logo_Banco_de_Occidente_logo.webp"
       }
     ],
     "telefonia": [
@@ -74,7 +74,7 @@
           "WhatsApp: 3112000000",
           "Bogotá: 601 7441818 / 601 7500500"
         ],
-        "logo": "/images/Logo_Claro.webp"
+        "logo": "assets/images/Logo_Claro.webp"
       },
       {
         "nombre": "Movistar Colombia",
@@ -84,7 +84,7 @@
           "Teléfono: 01 8000 93 0930 / 601 5885204",
           "WhatsApp: 3152333333"
         ],
-        "logo": "/images/Logo_Movistar.webp"
+        "logo": "assets/images/Logo_Movistar.webp"
       },
       {
         "nombre": "Tigo Colombia",
@@ -94,7 +94,7 @@
           "Teléfono: 01 8000 42 2222",
           "WhatsApp: 3114110911"
         ],
-        "logo": "/images/Logo_Tigo.webp"
+        "logo": "assets/images/Logo_Tigo.webp"
       },
       {
         "nombre": "WOM",
@@ -105,7 +105,7 @@
           "WhatsApp: 3027770000",
           "Bogotá: 601 3078050"
         ],
-        "logo": "/images/Logo_WOM.webp"
+        "logo": "assets/images/Logo_WOM.webp"
       }
     ],
     "entidades": [
@@ -117,7 +117,7 @@
           "Conmutador: 601 5978300",
           "Correo electrónico: contacto@dane.gov.co"
         ],
-        "logo": "/images/Logo_DANE.webp"
+        "logo": "assets/images/Logo_DANE.webp"
       },
       {
         "nombre": "DIAN",
@@ -127,7 +127,7 @@
           "Aduanas: ​601 7948880",
           "Centro Nacional de Cobro: 601 7948883"
         ],
-        "logo": "/images/Logo_DIAN.webp"
+        "logo": "assets/images/Logo_DIAN.webp"
       },
       {
         "nombre": "Prosperidad Social",
@@ -137,7 +137,7 @@
           "WhatsApp: 3188067329",
           "SMS: 85594"
         ],
-        "logo": "/images/Logo_Prosperidad_Social.webp"
+        "logo": "assets/images/Logo_Prosperidad_Social.webp"
       }
     ]
   },
@@ -147,31 +147,31 @@
         "nombre": "BBVA México",
         "web": "https://www.bbva.mx/",
         "contacto": ["Teléfono: 55 5226 2663"],
-        "logo": "/images/BBVA.webp"
+        "logo": "assets/images/BBVA.webp"
       },
       {
         "nombre": "Citibanamex",
         "web": "https://www.banamex.com/",
         "contacto": ["Teléfono: 55 1226 2639"],
-        "logo": "/images/citibanamex.webp"
+        "logo": "assets/images/citibanamex.webp"
       },
       {
         "nombre": "Santander México",
         "web": "https://www.santander.com.mx/",
         "contacto": ["Teléfono: 55 5169 4300"],
-        "logo": "/images/santander.webp"
+        "logo": "assets/images/santander.webp"
       },
       {
         "nombre": "Banorte",
         "web": "https://www.banorte.com/",
         "contacto": ["Teléfono: 81 8156 9600"],
-        "logo": "/images/banorte.webp"
+        "logo": "assets/images/banorte.webp"
       },
       {
         "nombre": "HSBC México",
         "web": "https://www.hsbc.com.mx/",
         "contacto": ["Teléfono: 55 5721 3390"],
-        "logo": "/images/hsbc.webp"
+        "logo": "assets/images/hsbc.webp"
       }
     ],
     "telefonia": [
@@ -179,19 +179,19 @@
         "nombre": "Telcel",
         "web": "https://www.telcel.com/",
         "contacto": ["Teléfono: 800 220 9518"],
-        "logo": "/images/Telcel.webp"
+        "logo": "assets/images/Telcel.webp"
       },
       {
         "nombre": "Movistar México",
         "web": "https://www.movistar.com.mx/",
         "contacto": ["Teléfono: 800 888 8366"],
-        "logo": "/images/Movistar.webp"
+        "logo": "assets/images/Movistar.webp"
       },
       {
         "nombre": "AT&T México",
         "web": "https://www.att.com.mx/",
         "contacto": ["Teléfono: 800 101 0288"],
-        "logo": "/images/AT&T.webp"
+        "logo": "assets/images/AT&T.webp"
       }
     ],
     "entidades": [
@@ -199,13 +199,13 @@
         "nombre": "CONDUSEF",
         "web": "https://www.condusef.gob.mx/",
         "contacto": ["Teléfono: 55 5340 0999"],
-        "logo": "/images/Consusef.webp"
+        "logo": "assets/images/Consusef.webp"
       },
       {
         "nombre": "PROFECO",
         "web": "https://www.gob.mx/profeco",
         "contacto": ["Teléfono: 55 5568 8722"],
-        "logo": "/images/profeco.webp"
+        "logo": "assets/images/profeco.webp"
       }
     ]
   }

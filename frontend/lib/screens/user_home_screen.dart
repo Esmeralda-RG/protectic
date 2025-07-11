@@ -47,14 +47,39 @@ class UserHomeScreen extends StatelessWidget {
                   childAspectRatio: isMobile ? 1.2 : 1.4,
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                children: [
-                  _buildMenuButton(context, Icons.quiz, 'Simulacros', isMobile),
-                  _buildMenuButton(context, Icons.lightbulb_outline, 'Consejos', isMobile),
-                  _buildMenuButton(context, Icons.account_balance, 'Entidades Oficiales', isMobile),
-                  _buildMenuButton(context, Icons.bar_chart, 'Ver progreso', isMobile),
-                  _buildMenuButton(context, Icons.school, 'Zona de enseñanza', isMobile),
-                  _buildMenuButton(context, Icons.school, 'Otros', isMobile),
-                ],
+                  children: [
+                    _buildMenuButton(
+                      context,
+                      Icons.quiz,
+                      'Simulacros',
+                      isMobile,
+                    ),
+                    _buildMenuButton(
+                      context,
+                      Icons.lightbulb_outline,
+                      'Consejos',
+                      isMobile,
+                    ),
+                    _buildMenuButton(
+                      context,
+                      Icons.account_balance,
+                      'Entidades Oficiales',
+                      isMobile,
+                    ),
+                    _buildMenuButton(
+                      context,
+                      Icons.bar_chart,
+                      'Ver progreso',
+                      isMobile,
+                    ),
+                    _buildMenuButton(
+                      context,
+                      Icons.school,
+                      'Zona de enseñanza',
+                      isMobile,
+                    ),
+                    _buildMenuButton(context, Icons.school, 'Otros', isMobile),
+                  ],
                 ),
                 const SizedBox(height: 40),
                 const SizedBox(height: 64, child: AudioVoiceControls()),
@@ -67,50 +92,52 @@ class UserHomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildMenuButton(BuildContext context, IconData icon, String label, bool isMobile) {
-  return ElevatedButton(
-    onPressed: () {
-      if (label == 'Simulacros') {
-        Navigator.pushNamed(context, '/simulacros');
-      } else if (label == 'Ver progreso') {
-        Navigator.pushNamed(context, '/progreso');
-      } else if (label == 'Zona de enseñanza') {
-        Navigator.pushNamed(context, '/ensenanza');
-      } else if (label == 'Consejos') {
-        Navigator.pushNamed(context, '/consejos');
-      } else if (label == 'Entidades Oficiales') {
-        Navigator.pushNamed(context, '/entidades');
-      } else {
-        print('Botón presionado: $label');
-      }
-    },
+  Widget _buildMenuButton(
+    BuildContext context,
+    IconData icon,
+    String label,
+    bool isMobile,
+  ) {
+    return ElevatedButton(
+      onPressed: () {
+        if (label == 'Simulacros') {
+          Navigator.pushNamed(context, '/simulacros');
+        } else if (label == 'Ver progreso') {
+          Navigator.pushNamed(context, '/progreso');
+        } else if (label == 'Zona de enseñanza') {
+          Navigator.pushNamed(context, '/ensenanza');
+        } else if (label == 'Consejos') {
+          Navigator.pushNamed(context, '/consejos');
+        } else if (label == 'Entidades Oficiales') {
+          Navigator.pushNamed(context, '/entities');
+        } else {
+          print('Botón presionado: $label');
+        }
+      },
 
-
-    style: ElevatedButton.styleFrom(
-      backgroundColor: Colors.white,
-      foregroundColor: const Color(0xFF795548),
-      elevation: 3,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.white,
+        foregroundColor: const Color(0xFF795548),
+        elevation: 3,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        padding: const EdgeInsets.all(8),
+        minimumSize: isMobile ? const Size(100, 100) : const Size(80, 80),
       ),
-      padding: const EdgeInsets.all(8),
-      minimumSize: isMobile ? const Size(100, 100) : const Size(80, 80),
-    ),
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Icon(icon, size: isMobile ? 28 : 22),
-        const SizedBox(height: 6),
-        Text(
-          label,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: isMobile ? 13 : 11,
-            fontWeight: FontWeight.w600,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(icon, size: isMobile ? 28 : 22),
+          const SizedBox(height: 6),
+          Text(
+            label,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: isMobile ? 13 : 11,
+              fontWeight: FontWeight.w600,
+            ),
           ),
-        ),
-      ],
-    ),
-  );
-}
+        ],
+      ),
+    );
+  }
 }

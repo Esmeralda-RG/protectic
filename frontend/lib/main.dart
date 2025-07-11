@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:protectic/screens/entities_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/user_home_screen.dart';
 import 'screens/simulacro_screen.dart';
 import 'package:protectic/screens/progreso_screen.dart';
 import 'screens/ensenanza_screen.dart';
+
 void main() {
   runApp(ProtecTICApp());
 }
@@ -19,7 +21,7 @@ class ProtecTICApp extends StatelessWidget {
         fontFamily: 'Arial',
       ),
       debugShowCheckedModeBanner: false,
-        // home: HomeScreen(),
+      // home: HomeScreen(),
       // Pantalla inicial
       home: const UserHomeScreen(name: 'fabi'),
 
@@ -28,7 +30,7 @@ class ProtecTICApp extends StatelessWidget {
         '/simulacros': (context) => const SimulacroScreen(),
         '/progreso': (context) => const ProgresoScreen(),
         '/ensenanza': (context) => const EnsenanzaScreen(),
-
+        '/entities': (context) => const EntitiesScreen(),
       },
     );
   }

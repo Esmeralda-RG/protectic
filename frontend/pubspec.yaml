@@ -45,6 +45,7 @@ dependencies:
   pin_code_fields: ^8.0.0
   permission_handler: ^11.0.1
   flutter_tts: ^3.8.3
+  url_launcher: ^6.2.5
 
 dev_dependencies:
   flutter_test:
@@ -69,6 +70,8 @@ flutter:
   uses-material-design: true
   assets:
     - assets/logo.png
+    - assets/images/
+    - data/
 
 
   # To add assets to your application, add an assets section, like this:

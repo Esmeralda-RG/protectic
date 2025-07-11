@@ -13,11 +13,8 @@ class HomeScreen extends StatelessWidget {
       backgroundColor: const Color(0xFFF7F4D3),
       body: Container(
         decoration: BoxDecoration(
-          border: Border.all(
-            color: Color(0xFF795548), 
-            width: 8, 
-          ),
-           // Curvatura de todo el borde
+          border: Border.all(color: Color(0xFF795548), width: 8),
+          // Curvatura de todo el borde
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(32),
@@ -89,7 +86,8 @@ class HomeScreen extends StatelessWidget {
                                 "Bienvenido a ProtecTIC. Di iniciar sesión o registrarse para continuar.",
                             onVoiceCommand: (command) {
                               final cmd = command.toLowerCase();
-                              if (cmd.contains('iniciar sesión')) {
+                              if (cmd.contains('iniciar') ||
+                                  cmd.contains('iniciar sesión')) {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -117,7 +115,6 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
       ),
-
     );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 
 class SpeechService {
@@ -13,13 +14,16 @@ class SpeechService {
 
   Future<void> startListening(Function(String) onResult) async {
     if (!_isInitialized) await initialize();
+    final localeId = WidgetsBinding.instance.platformDispatcher.locale
+        .toString();
 
     _speech.listen(
       onResult: (result) {
         final spokenText = result.recognizedWords.toLowerCase();
         onResult(spokenText);
       },
-      localeId: 'es_CO',
+
+      localeId: localeId,
     );
   }
 

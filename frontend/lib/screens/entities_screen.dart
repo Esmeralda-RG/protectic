@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:protectic/services/tts_service.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../widgets/audio_voice_controls.dart';
 
@@ -20,6 +21,8 @@ class _EntitiesScreenState extends State<EntitiesScreen> {
   String? selectedCategory;
   String searchQuery = '';
   List<bool> expandedStates = [];
+  String _audioText = '';
+  final TtsService _ttsService = TtsService();
 
   @override
   void initState() {
@@ -58,17 +61,156 @@ class _EntitiesScreenState extends State<EntitiesScreen> {
         .toList();
   }
 
-  InputDecoration _decoration(String label) => InputDecoration(
-    filled: true,
-    fillColor: Colors.white,
-    labelText: label,
-    labelStyle: const TextStyle(fontSize: 22),
-    border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-    contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-  );
+  String _describeEntity(dynamic e) {
+    final buffer = StringBuffer()
+      ..writeln(e['nombre'])
+      ..writeln('Web: ${e['web']}');
+    for (final c in e['contacto']) buffer.writeln(c);
+    return buffer.toString();
+  }
 
-  TextStyle _dropStyle() =>
-      const TextStyle(fontSize: 20, color: Colors.black, fontFamily: 'Roboto');
+  String _normalize(String s) {
+    const withDiacritics = 'áàäâãéèëêíìïîóòöôõúùüûñ';
+    const without = 'aaaaaeeeeiiiiooooouuuun';
+    for (int i = 0; i < withDiacritics.length; i++) {
+      s = s.replaceAll(withDiacritics[i], without[i]);
+    }
+    return s.toLowerCase().trim();
+  }
+
+  void _handleVoiceCommand(String cmd) async {
+    cmd = _normalize(cmd);
+
+    if (cmd == 'instrucciones') {
+      await _ttsService.speak(
+        'Usa los siguientes comandos de voz: '
+        'Di "país" seguido del nombre del país, por ejemplo, "país México". '
+        'Di "categoría" seguido de bancos, telefonía o entidades, por ejemplo, "categoría bancos". '
+        'Di "buscar" seguido del nombre a buscar, por ejemplo, "buscar Banco Azteca". '
+        'Di "seleccionar" seguido del nombre de la entidad, por ejemplo, "seleccionar Banco Azteca". '
+        'Di "leer" para escuchar la información de la entidad seleccionada.',
+      );
+      return;
+    }
+
+    if (cmd.startsWith('pais ') || cmd.startsWith('país ')) {
+      final spoken = cmd.replaceFirst(RegExp(r'^pais\s'), '').trim();
+      final match = data.keys.firstWhere(
+        (c) => _normalize(c).contains(spoken),
+        orElse: () => '',
+      );
+
+      if (match.isNotEmpty) {
+        setState(() {
+          selectedCountry = match;
+          selectedCategory = null;
+          searchQuery = '';
+          expandedStates = List<bool>.filled(_entityCount(), false);
+        });
+        await _ttsService.speak('País cambiado a $match');
+      } else {
+        await _ttsService.speak('País no encontrado. Intenta de nuevo.');
+      }
+      return;
+    }
+
+    if (cmd.startsWith('categoria ') || cmd.startsWith('categoría ')) {
+      final spoken = cmd.replaceFirst(RegExp(r'^categoria\s'), '').trim();
+      const categorias = {
+        'bancos': ['bancos', 'banco'],
+        'telefonia': ['telefonia', 'teléfonía', 'telefono', 'teléfono'],
+        'entidades': [
+          'entidades',
+          'entidades estatales',
+          'estatal',
+          'estatales',
+        ],
+      };
+
+      String? match;
+      for (var entry in categorias.entries) {
+        if (entry.value.any((v) => _normalize(v).contains(spoken))) {
+          match = entry.key;
+          break;
+        }
+      }
+
+      if (match != null && match.isNotEmpty) {
+        setState(() {
+          selectedCategory = match;
+          searchQuery = '';
+          expandedStates = List<bool>.filled(_entityCount(), false);
+        });
+        await _ttsService.speak('Categoría cambiada a $match');
+      } else {
+        await _ttsService.speak(
+          'Categoría no encontrada. Intenta con bancos, telefonía o entidades.',
+        );
+      }
+      return;
+    }
+
+    if (cmd.startsWith('buscar ')) {
+      final term = cmd.replaceFirst('buscar ', '').trim();
+      if (term.isEmpty) {
+        await _ttsService.speak(
+          'Por favor, especifica un término de búsqueda.',
+        );
+        return;
+      }
+      setState(() {
+        searchQuery = term;
+        expandedStates = List<bool>.filled(_entityCount(), false);
+      });
+      await _ttsService.speak('Buscando $term');
+      return;
+    }
+
+    if (cmd == 'leer') {
+      if (_audioText.isEmpty) {
+        await _ttsService.speak(
+          'No hay texto para leer. Selecciona una entidad primero.',
+        );
+      } else {
+        await _ttsService.speak(_audioText);
+      }
+      return;
+    }
+
+    if (cmd.startsWith('seleccionar ')) {
+      final nombre = cmd.replaceFirst('seleccionar ', '').trim();
+      if (nombre.isEmpty) {
+        await _ttsService.speak(
+          'Por favor, especifica el nombre de la entidad.',
+        );
+        return;
+      }
+
+      final i = _filteredEntities.indexWhere(
+        (e) => _normalize(e['nombre']).contains(nombre),
+      );
+
+      if (i != -1) {
+        setState(() {
+          expandedStates = List<bool>.filled(_entityCount(), false);
+          expandedStates[i] = true;
+          _audioText = _describeEntity(_filteredEntities[i]);
+        });
+        await _ttsService.speak(
+          'Seleccionado ${_filteredEntities[i]['nombre']}',
+        );
+      } else {
+        await _ttsService.speak(
+          'Entidad no encontrada. Intenta con otro nombre.',
+        );
+      }
+      return;
+    }
+
+    await _ttsService.speak(
+      'Comando no reconocido. Intenta con país, categoría, buscar, leer, seleccionar o instrucciones.',
+    );
+  }
 
   Widget _buildEntityCard(dynamic entity, int index) {
     final isExpanded = expandedStates[index];
@@ -78,7 +220,14 @@ class _EntitiesScreenState extends State<EntitiesScreen> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       elevation: 4,
       child: InkWell(
-        onTap: () => setState(() => expandedStates[index] = !isExpanded),
+        onTap: () {
+          setState(() {
+            expandedStates[index] = !isExpanded;
+            if (!isExpanded) {
+              _audioText = _describeEntity(entity);
+            }
+          });
+        },
         borderRadius: BorderRadius.circular(16),
         child: Padding(
           padding: const EdgeInsets.all(20),
@@ -227,6 +376,7 @@ class _EntitiesScreenState extends State<EntitiesScreen> {
                                 setState(() {
                                   selectedCountry = value;
                                   selectedCategory = null;
+                                  searchQuery = '';
                                   expandedStates = List<bool>.filled(
                                     _entityCount(),
                                     false,
@@ -262,6 +412,7 @@ class _EntitiesScreenState extends State<EntitiesScreen> {
                                 if (value == null) return;
                                 setState(() {
                                   selectedCategory = value;
+                                  searchQuery = '';
                                   expandedStates = List<bool>.filled(
                                     _entityCount(),
                                     false,
@@ -323,7 +474,10 @@ class _EntitiesScreenState extends State<EntitiesScreen> {
                                           ),
                                     ),
                             const SizedBox(height: 40),
-                            const AudioVoiceControls(),
+                            AudioVoiceControls(
+                              audioText: _audioText,
+                              onVoiceCommand: _handleVoiceCommand,
+                            ),
                           ],
                         ),
                       ),
@@ -334,4 +488,16 @@ class _EntitiesScreenState extends State<EntitiesScreen> {
             ),
     );
   }
+
+  InputDecoration _decoration(String label) => InputDecoration(
+    filled: true,
+    fillColor: Colors.white,
+    labelText: label,
+    labelStyle: const TextStyle(fontSize: 22),
+    border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+    contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+  );
+
+  TextStyle _dropStyle() =>
+      const TextStyle(fontSize: 20, color: Colors.black, fontFamily: 'Roboto');
 }

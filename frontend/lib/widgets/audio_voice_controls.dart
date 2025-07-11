@@ -17,6 +17,7 @@ class _AudioVoiceControlsState extends State<AudioVoiceControls> {
   final TtsService _ttsService = TtsService();
   final SpeechService _speechService = SpeechService();
   bool _isListening = false;
+  bool _isFirstAudioPress = true;
 
   Future<void> _handleMicrophonePermission() async {
     final status = await Permission.microphone.status;
@@ -40,17 +41,16 @@ class _AudioVoiceControlsState extends State<AudioVoiceControls> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('No se pudo iniciar el reconocimiento')),
         );
+        await _ttsService.speak('No se pudo iniciar el reconocimiento de voz');
         return;
       }
 
       setState(() => _isListening = true);
-
       await _speechService.startListening((command) {
         widget.onVoiceCommand?.call(command);
-        _stopListening(); // Detener después del primer comando reconocido
       });
     } else {
-      _stopListening();
+      await _stopListening();
     }
   }
 
@@ -60,8 +60,25 @@ class _AudioVoiceControlsState extends State<AudioVoiceControls> {
   }
 
   Future<void> _speakAudio() async {
-    if (widget.audioText != null) {
+    if (_isFirstAudioPress &&
+        (widget.audioText == null || widget.audioText!.isEmpty)) {
+      await _ttsService.speak(
+        'Bienvenido. Usa los siguientes comandos de voz: '
+        'Di "país" seguido del nombre del país, por ejemplo, "país México". '
+        'Di "categoría" seguido de bancos, telefonía o entidades, por ejemplo, "categoría bancos". '
+        'Di "buscar" seguido del nombre a buscar, por ejemplo, "buscar Banco Azteca". '
+        'Di "seleccionar" seguido del nombre de la entidad, por ejemplo, "seleccionar Banco Azteca". '
+        'Di "leer" para escuchar la información de la entidad seleccionada.'
+        'Di "instrucciones" para escuchar los comandos de voz nuevamente.',
+      );
+      setState(() => _isFirstAudioPress = false);
+    } else if (widget.audioText != null && widget.audioText!.isNotEmpty) {
       await _ttsService.speak(widget.audioText!);
+    } else {
+      await _ttsService.speak(
+        'No hay texto para leer. Selecciona una entidad primero. '
+        'Di "instrucciones" para escuchar los comandos de voz nuevamente.',
+      );
     }
   }
 
@@ -76,7 +93,7 @@ class _AudioVoiceControlsState extends State<AudioVoiceControls> {
   Widget build(BuildContext context) {
     return Center(
       child: Wrap(
-        spacing: 48, // ⬅️ Espaciado aumentado entre botones
+        spacing: 48,
         runSpacing: 16,
         alignment: WrapAlignment.center,
         children: [

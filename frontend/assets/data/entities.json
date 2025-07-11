@@ -1,5 +1,5 @@
 {
-  "colombia": {
+  "Colombia": {
     "bancos": [
       {
         "nombre": "Bancolombia",
@@ -141,7 +141,7 @@
       }
     ]
   },
-  "mexico": {
+  "Mexico": {
     "bancos": [
       {
         "nombre": "BBVA México",

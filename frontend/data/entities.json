@@ -206,6 +206,12 @@
         "web": "https://www.gob.mx/profeco",
         "contacto": ["Teléfono: 55 5568 8722"],
         "logo": "assets/images/profeco.webp"
+      },
+      {
+        "nombre": "Policía Cibernética (Guardia Nacional)",
+        "web": "https://www.gob.mx/gncertmx/articulos/ciberseguridad-ciudadana-263949",
+        "contacto": ["Línea: 088"],
+        "logo": "assets/images/Policía-Cibernética-_Guardia-Nacional_.webp"
       }
     ]
   }

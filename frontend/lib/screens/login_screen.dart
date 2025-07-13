@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import 'package:protectic/screens/recover_pin/recover_pin_screen.dart';
 import 'dart:convert';
 
 import '../widgets/custom_home_button.dart';
@@ -191,7 +192,17 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     const SizedBox(height: 24),
-                    CustomHomeButton(text: 'Recuperar PIN', onPressed: () {}),
+                    CustomHomeButton(
+                      text: 'Recuperar PIN',
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const RecoverPinScreen(),
+                          ),
+                        );
+                      },
+                    ),
                     const SizedBox(height: 48),
                     const AudioVoiceControls(),
                   ],

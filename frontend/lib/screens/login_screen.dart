@@ -130,11 +130,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         }
 
                         try {
-                          final response = await http.post(
-                            Uri.parse('http://192.168.10.12:3000/login'),
-                            headers: {'Content-Type': 'application/json'},
-                            body: jsonEncode({'phone': phone, 'pin': pin}),
-                          );
+                           final response = await http.post(
+                              Uri.parse('https://previews-missa.uk/backend/login_usuario.php'),
+                              headers: {'Content-Type': 'application/json'},
+                              body: jsonEncode({'phone': phone, 'pin': pin}),
+                            );
+
 
                           final data = jsonDecode(response.body);
 

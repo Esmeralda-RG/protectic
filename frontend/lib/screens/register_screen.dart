@@ -53,9 +53,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ),
         textAlign: TextAlign.center,
       ),
-      backgroundColor: isSuccess
-          ? const Color(0xFFD4EDDA)
-          : const Color(0xFFF8D7DA),
+      backgroundColor:
+          isSuccess ? const Color(0xFFD4EDDA) : const Color(0xFFF8D7DA),
       behavior: SnackBarBehavior.floating,
       margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
       elevation: 8,
@@ -177,9 +176,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                         try {
                           final response = await http.post(
-                            Uri.parse('http://192.168.10.12:3000/register'),
-                            headers: {'Content-Type': 'application/json'},
-                            body: jsonEncode({
+                            Uri.parse(
+                                'https://previews-missa.uk/backend/registrar_usuario.php'),
+                            headers: {
+                              'Content-Type': 'application/json',
+                            },
+                            body: json.encode({
                               'name': name,
                               'phone': phone,
                               'pin': pin,
@@ -188,10 +190,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                           final data = jsonDecode(response.body);
 
-                          if (response.statusCode == 200) {
+                          if (response.statusCode == 200 &&
+                              data['message'] != null) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               _buildStyledSnackBar(
-                                message: data['message'] ?? 'Registro exitoso',
+                                message: data['message'],
                                 isSuccess: true,
                               ),
                             );
@@ -202,7 +205,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
                               _buildStyledSnackBar(
-                                message: data['error'] ?? 'Error al registrar',
+                                message: data['error'] ??
+                                    'Error al registrar. Intenta nuevamente.',
                                 isSuccess: false,
                               ),
                             );
@@ -210,7 +214,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         } catch (e) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             _buildStyledSnackBar(
-                              message: 'Error de red',
+                              message: 'Error de red: ${e.toString()}',
                               isSuccess: false,
                             ),
                           );

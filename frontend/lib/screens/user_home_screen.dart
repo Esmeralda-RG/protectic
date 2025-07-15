@@ -12,16 +12,24 @@ class UserHomeScreen extends StatelessWidget {
     final isMobile = screenSize.width < 600;
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF7F4D3),
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: const Color(0xFF795548), // Café
-            width: 7,
-          ),
+        backgroundColor: const Color(0xFFF7F4D3),
+        appBar: AppBar(
+          backgroundColor: const Color(0xFFF7F4D3),
+          elevation: 0,
+          automaticallyImplyLeading: false,
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.person, color: Color(0xFF795548)),
+              tooltip: 'Perfil / Cerrar sesión',
+              onPressed: () {
+                _showLogoutDialog(context);
+              },
+            ),
+          ],
         ),
+
+      body: Container(
+
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
@@ -88,6 +96,32 @@ class UserHomeScreen extends StatelessWidget {
             ),
           ),
         ),
+      ),
+    );
+  }
+  void _showLogoutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Cerrar sesión'),
+        content: const Text('¿Estás seguro de que deseas cerrar sesión?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancelar'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context); // Cierra el diálogo
+              Navigator.pushReplacementNamed(context, '/login'); // Redirige al login
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFF795548),
+              foregroundColor: Colors.white,
+            ),
+            child: const Text('Cerrar sesión'),
+          ),
+        ],
       ),
     );
   }

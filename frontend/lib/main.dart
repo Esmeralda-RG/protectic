@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-
+import 'screens/preview_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/user_home_screen.dart';
 import 'screens/simulacro_screen.dart';
 import 'screens/progreso_screen.dart';
 import 'screens/ensenanza_screen.dart';
 import 'screens/entities_screen.dart';
-
+import 'screens/consejos_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp(); // Inicializa Firebase
+  // await Firebase.initializeApp(); // Descomenta si usas Firebase
   runApp(ProtecTICApp());
 }
 
@@ -25,8 +25,12 @@ class ProtecTICApp extends StatelessWidget {
         fontFamily: 'Arial',
       ),
       debugShowCheckedModeBanner: false,
-      home: HomeScreen(),
+      home: const PreviewScreen(), // ← Pantalla de bienvenida
+        // home: const UserHomeScreen(name: 'fabi'),
       routes: {
+        '/home': (context) => const HomeScreen(),
+        '/user_home': (context) => const UserHomeScreen(name: 'Usuario'),
+        '/consejos': (context) => const ConsejosScreen(),
         '/simulacros': (context) => const SimulacroScreen(),
         '/progreso': (context) => const ProgresoScreen(),
         '/ensenanza': (context) => const EnsenanzaScreen(),

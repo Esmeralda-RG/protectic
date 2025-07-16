@@ -12,14 +12,13 @@ dependencies:
   flutter:
     sdk: flutter
 
+  flutter_tts: ^3.8.3
+
   # Íconos iOS
   cupertino_icons: ^1.0.8
 
   # Peticiones HTTP
   http: ^1.1.0
-
-  # Texto a voz
-  flutter_tts: ^3.8.3
 
   # Reconocimiento de voz
   speech_to_text:
@@ -38,13 +37,13 @@ dependencies:
 
   # Permisos (micrófono, etc.)
   permission_handler: ^11.3.0
-  # enviar codigo de recuperacion al celular
+
+  # Firebase (comentado si no se usa aún)
   firebase_core: ^2.30.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
   flutter_lints: ^3.0.1
 
 flutter:

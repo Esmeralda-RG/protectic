@@ -1,15 +1,34 @@
 import 'package:flutter/material.dart';
 import '../widgets/audio_voice_controls.dart';
+import '../services/tts_service.dart'; 
 
-class SimulacroScreen extends StatelessWidget {
+class SimulacroScreen extends StatefulWidget {
   const SimulacroScreen({super.key});
+
+  @override
+  State<SimulacroScreen> createState() => _SimulacroScreenState();
+}
+
+class _SimulacroScreenState extends State<SimulacroScreen> {
+final TtsService _ttsService = TtsService();
+
+  @override
+  void initState() {
+    super.initState();
+    // Reproducir el mensaje apenas entra
+    Future.delayed(const Duration(milliseconds: 300), () {
+      _ttsService.speak(
+        'Bienvenido a los simulacros. Elige el tipo de simulacro que deseas hacer. Puedes decir mensaje, correo o llamada para comenzar.',
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Simulacros'),
-        backgroundColor: const Color(0xFF795548), 
+        backgroundColor: const Color(0xFF795548),
         foregroundColor: Colors.white,
       ),
       body: SingleChildScrollView(
@@ -68,9 +87,33 @@ class SimulacroScreen extends StatelessWidget {
               },
             ),
 
-            // Controles de audio al final
             const SizedBox(height: 40),
-            const SizedBox(height: 64, child: AudioVoiceControls()),
+
+            AudioVoiceControls(
+              audioText:
+                  'Bienvenido a los simulacros. Elige el tipo de simulacro que deseas hacer. Puedes decir mensaje, correo o llamada para comenzar.',
+              onVoiceCommand: (command) {
+                final cmd = command.toLowerCase();
+                if (cmd.contains('mensaje') || cmd.contains('sms') || cmd.contains('texto')) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Simulacro de SMS en construcción')),
+                  );
+                } else if (cmd.contains('correo') || cmd.contains('email')) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Simulacro de correo en construcción')),
+                  );
+                } else if (cmd.contains('llamada') || cmd.contains('teléfono')) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Simulacro de llamada en construcción')),
+                  );
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('No entendí esa opción. Intenta decir mensaje, correo o llamada.')),
+                  );
+                }
+              },
+            ),
+
             const SizedBox(height: 20),
           ],
         ),
@@ -106,8 +149,7 @@ class SimulacroScreen extends StatelessWidget {
                   children: [
                     Text(
                       title,
-                      style:
-                          const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 8),
                     Text(

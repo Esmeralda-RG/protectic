@@ -99,12 +99,13 @@ class _AudioVoiceControlsState extends State<AudioVoiceControls> {
         children: [
           _buildButton(
             icon: _isListening ? Icons.stop : Icons.mic,
-            label: 'Voz',
+            label: _isListening ? 'Toca para terminar' : 'Toca para hablar',
             onPressed: _toggleListening,
           ),
+
           _buildButton(
             icon: Icons.volume_up,
-            label: 'Audio',
+            label: 'Toca para escuchar',
             onPressed: _speakAudio,
           ),
         ],

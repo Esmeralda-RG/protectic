@@ -205,7 +205,88 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
                     ),
                     const SizedBox(height: 48),
-                    const AudioVoiceControls(),
+                    AudioVoiceControls(
+                        audioText:
+                            'Esta es la pantalla de inicio de sesión. Ingresa tu número de teléfono y tu PIN para continuar. '
+                            'También puedes decir iniciar sesión o recuperar PIN.',
+                        onVoiceCommand: (command) {
+                          final cmd = command.toLowerCase();
+
+                          if (cmd.contains('iniciar sesión') || cmd.contains('entrar')) {
+                            // Ejecutar acción de login automáticamente
+                            final phone = phoneController.text.trim();
+                            final pin = pinController.text.trim();
+
+                            if (phone.isEmpty || pin.isEmpty) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                _buildStyledSnackBar(
+                                  message: 'Por favor ingresa tu teléfono y PIN',
+                                  isSuccess: false,
+                                ),
+                              );
+                            } else {
+                              // Simula el botón de login
+                              FocusScope.of(context).unfocus(); // Cierra teclado
+                              CustomHomeButton(
+                                text: 'Iniciar sesión',
+                                onPressed: () async {
+                                  try {
+                                    final response = await http.post(
+                                      Uri.parse('https://previews-missa.uk/backend/login_usuario.php'),
+                                      headers: {'Content-Type': 'application/json'},
+                                      body: jsonEncode({'phone': phone, 'pin': pin}),
+                                    );
+
+                                    final data = jsonDecode(response.body);
+
+                                    if (response.statusCode == 200) {
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        _buildStyledSnackBar(
+                                          message: data['message'] ?? 'Inicio de sesión exitoso',
+                                          isSuccess: true,
+                                        ),
+                                      );
+
+                                      final userName = data['name'] ?? 'Usuario';
+
+                                      await Future.delayed(const Duration(seconds: 2));
+                                      if (context.mounted) {
+                                        Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (_) => UserHomeScreen(name: userName),
+                                          ),
+                                        );
+                                      }
+                                    } else {
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        _buildStyledSnackBar(
+                                          message: data['error'] ?? 'Credenciales inválidas',
+                                          isSuccess: false,
+                                        ),
+                                      );
+                                    }
+                                  } catch (e) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      _buildStyledSnackBar(
+                                        message: 'Error de red',
+                                        isSuccess: false,
+                                      ),
+                                    );
+                                  }
+                                },
+                              ).onPressed!(); // Ejecuta el botón
+                            }
+                          } else if (cmd.contains('recuperar') || cmd.contains('pin')) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => const RecoverPinScreen(),
+                              ),
+                            );
+                          }
+                        },
+                      ),
                   ],
                 ),
               ),

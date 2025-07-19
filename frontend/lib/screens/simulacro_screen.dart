@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:protectic/screens/simulation_call_intro_screen.dart';
 import '../widgets/audio_voice_controls.dart';
-import '../services/tts_service.dart'; 
+import '../services/tts_service.dart';
 
 class SimulacroScreen extends StatefulWidget {
   const SimulacroScreen({super.key});
@@ -10,7 +11,7 @@ class SimulacroScreen extends StatefulWidget {
 }
 
 class _SimulacroScreenState extends State<SimulacroScreen> {
-final TtsService _ttsService = TtsService();
+  final TtsService _ttsService = TtsService();
 
   @override
   void initState() {
@@ -45,7 +46,6 @@ final TtsService _ttsService = TtsService();
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 24),
-
             _buildSimulacroCard(
               context,
               title: 'Simulacro de mensaje de texto',
@@ -54,12 +54,12 @@ final TtsService _ttsService = TtsService();
               icon: Icons.sms,
               onTap: () {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Simulacro de SMS en construcción')),
+                  const SnackBar(
+                      content: Text('Simulacro de SMS en construcción')),
                 );
               },
             ),
             const SizedBox(height: 16),
-
             _buildSimulacroCard(
               context,
               title: 'Simulacro de correo electrónico',
@@ -68,12 +68,12 @@ final TtsService _ttsService = TtsService();
               icon: Icons.email,
               onTap: () {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Simulacro de correo en construcción')),
+                  const SnackBar(
+                      content: Text('Simulacro de correo en construcción')),
                 );
               },
             ),
             const SizedBox(height: 16),
-
             _buildSimulacroCard(
               context,
               title: 'Simulacro de llamada telefónica',
@@ -81,39 +81,49 @@ final TtsService _ttsService = TtsService();
                   'Descubre cómo reconocer una llamada falsa que intenta asustarte o pedirte datos personales o dinero.',
               icon: Icons.phone,
               onTap: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Simulacro de llamada en construcción')),
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const SimulationCallIntroScreen(),
+                  ),
                 );
               },
             ),
-
             const SizedBox(height: 40),
-
             AudioVoiceControls(
               audioText:
                   'Bienvenido a los simulacros. Elige el tipo de simulacro que deseas hacer. Puedes decir mensaje, correo o llamada para comenzar.',
               onVoiceCommand: (command) {
                 final cmd = command.toLowerCase();
-                if (cmd.contains('mensaje') || cmd.contains('sms') || cmd.contains('texto')) {
+                if (cmd.contains('mensaje') ||
+                    cmd.contains('sms') ||
+                    cmd.contains('texto')) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Simulacro de SMS en construcción')),
+                    const SnackBar(
+                        content: Text('Simulacro de SMS en construcción')),
                   );
                 } else if (cmd.contains('correo') || cmd.contains('email')) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Simulacro de correo en construcción')),
+                    const SnackBar(
+                        content: Text('Simulacro de correo en construcción')),
                   );
-                } else if (cmd.contains('llamada') || cmd.contains('teléfono')) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Simulacro de llamada en construcción')),
+                } else if (cmd.contains('llamada') ||
+                    cmd.contains('teléfono')) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const SimulationCallIntroScreen(),
+                    ),
                   );
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('No entendí esa opción. Intenta decir mensaje, correo o llamada.')),
+                    const SnackBar(
+                        content: Text(
+                            'No entendí esa opción. Intenta decir mensaje, correo o llamada.')),
                   );
                 }
               },
             ),
-
             const SizedBox(height: 20),
           ],
         ),
@@ -149,7 +159,8 @@ final TtsService _ttsService = TtsService();
                   children: [
                     Text(
                       title,
-                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      style: const TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 8),
                     Text(

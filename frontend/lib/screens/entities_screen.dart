@@ -55,8 +55,8 @@ class _EntitiesScreenState extends State<EntitiesScreen> {
     return list
         .where(
           (e) => e['nombre'].toString().toLowerCase().contains(
-            searchQuery.toLowerCase(),
-          ),
+                searchQuery.toLowerCase(),
+              ),
         )
         .toList();
   }
@@ -285,9 +285,8 @@ class _EntitiesScreenState extends State<EntitiesScreen> {
                 ...List<Widget>.from(
                   (entity['contacto'] as List<dynamic>).map((c) {
                     final parts = c.toString().split(':');
-                    final label = parts.length > 1
-                        ? parts[0].trim()
-                        : 'Contacto';
+                    final label =
+                        parts.length > 1 ? parts[0].trim() : 'Contacto';
                     final value = parts.length > 1 ? parts[1].trim() : parts[0];
                     return Padding(
                       padding: const EdgeInsets.symmetric(vertical: 4),
@@ -325,14 +324,11 @@ class _EntitiesScreenState extends State<EntitiesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    const bg = Color(0xFFF7F4D3);
-
     return Scaffold(
-      backgroundColor: bg,
       appBar: AppBar(
-        backgroundColor: bg,
-        elevation: 0,
-        iconTheme: const IconThemeData(color: Colors.black, size: 32),
+        title: const Text('Entidades Oficiales'),
+        backgroundColor: const Color(0xFF795548),
+        foregroundColor: Colors.white,
       ),
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
@@ -343,8 +339,8 @@ class _EntitiesScreenState extends State<EntitiesScreen> {
                     final double maxWidth = kIsWeb && constraints.maxWidth > 800
                         ? 800
                         : constraints.maxWidth < 600
-                        ? constraints.maxWidth
-                        : 600;
+                            ? constraints.maxWidth
+                            : 600;
 
                     return SingleChildScrollView(
                       padding: const EdgeInsets.symmetric(
@@ -469,9 +465,9 @@ class _EntitiesScreenState extends State<EntitiesScreen> {
                                       itemCount: _filteredEntities.length,
                                       itemBuilder: (context, i) =>
                                           _buildEntityCard(
-                                            _filteredEntities[i],
-                                            i,
-                                          ),
+                                        _filteredEntities[i],
+                                        i,
+                                      ),
                                     ),
                             const SizedBox(height: 40),
                             AudioVoiceControls(
@@ -490,13 +486,14 @@ class _EntitiesScreenState extends State<EntitiesScreen> {
   }
 
   InputDecoration _decoration(String label) => InputDecoration(
-    filled: true,
-    fillColor: Colors.white,
-    labelText: label,
-    labelStyle: const TextStyle(fontSize: 22),
-    border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-    contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-  );
+        filled: true,
+        fillColor: Colors.white,
+        labelText: label,
+        labelStyle: const TextStyle(fontSize: 22),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+      );
 
   TextStyle _dropStyle() =>
       const TextStyle(fontSize: 20, color: Colors.black, fontFamily: 'Roboto');

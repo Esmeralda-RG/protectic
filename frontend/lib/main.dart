@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:protectic/screens/evaluacion_llamada_screen.dart';
 import 'package:protectic/screens/llamada_entrante_screen.dart';
 import 'package:protectic/screens/simulacro_call_real.dart';
 import 'screens/preview_screen.dart';
@@ -40,6 +41,11 @@ class ProtecTICApp extends StatelessWidget {
         '/entities': (context) => const EntitiesScreen(),
         '/llamada-entrante': (_) => const LlamadaEntranteScreen(),
         '/simulacro-llamada': (_) => const SimulacroCallReal(),
+        '/evaluacion-llamada': (context) {
+          final args = ModalRoute.of(context)!.settings.arguments;
+          final input = (args is String) ? args : '';
+          return EvaluacionLlamadaScreen(pinIngresado: input);
+        },
       },
     );
   }

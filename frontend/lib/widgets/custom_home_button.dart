@@ -30,6 +30,7 @@ class CustomHomeButton extends StatelessWidget {
         onPressed: onPressed,
         child: Text(
           text,
+          textAlign: TextAlign.center,
           style: const TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.w500,

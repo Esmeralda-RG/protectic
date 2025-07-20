@@ -33,11 +33,9 @@ class _SimulationCallIntroScreenState extends State<SimulationCallIntroScreen> {
     });
   }
 
-  void _iniciarSimulacro() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Iniciando simulacro...')),
-    );
-    // Navigator.push(context, MaterialPageRoute(builder: (_) => SimulacroLlamadaPantallaReal()));
+  void _iniciarSimulacro() async {
+    await _ttsService.stop();
+    Navigator.pushNamed(context, '/llamada-entrante');
   }
 
   @override

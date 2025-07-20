@@ -14,7 +14,12 @@ class _SimulacroCallRealState extends State<SimulacroCallReal> {
   final TtsService _ttsService = TtsService();
 
   final String _mensajeFalso =
-      'Hola, habla del Banco Nacional. Su cuenta ha sido comprometida. Para continuar, por favor ingrese el PIN de su tarjeta.';
+      'Buenos días. Le habla un representante del Banco Nacional. '
+      'Detectamos una actividad inusual en su cuenta bancaria asociada a su número telefónico. '
+      'Por razones de seguridad, necesitamos validar su identidad. '
+      'Por favor, ingrese el pin de su tarjeta para continuar con el proceso de verificación. '
+      'Este procedimiento es completamente confidencial y no compartiremos su información con terceros. '
+      'Gracias por su colaboración.';
 
   Timer? _timer;
   int _seconds = 0;
@@ -38,10 +43,14 @@ class _SimulacroCallRealState extends State<SimulacroCallReal> {
   }
 
   void _onKeyPress(String value) {
-    HapticFeedback.lightImpact();
+    HapticFeedback.mediumImpact();
     setState(() {
       _input += value;
     });
+
+    if (_input.length == 4) {
+      _endCall();
+    }
   }
 
   void _onBackspace() {
@@ -53,9 +62,10 @@ class _SimulacroCallRealState extends State<SimulacroCallReal> {
     }
   }
 
-  void _endCall() {
+  void _endCall() async {
     _timer?.cancel();
-    Navigator.pushNamed(
+    await _ttsService.stop();
+    Navigator.pushReplacementNamed(
       context,
       '/evaluacion-llamada',
       arguments: _input,

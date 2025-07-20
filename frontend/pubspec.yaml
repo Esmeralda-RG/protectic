@@ -41,6 +41,10 @@ dependencies:
   # Firebase (comentado si no se usa aún)
   firebase_core: ^2.30.0
 
+  vibration: ^3.1.3
+
+  audioplayers: ^5.2.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -49,6 +53,7 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
+    - assets/sounds/ringtone.mp3
     - assets/logo.png
     - assets/images/
     - data/
